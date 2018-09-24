@@ -1,19 +1,20 @@
 module.exports = function check(str, bracketsConfig) {
 
-  let condition = [];
+  let condition = [],
+      string = str;
 
-  for (let i = 0; i < bracketsConfig.length; i++) {
+  for (let i = 0, len = bracketsConfig.length; i < len; i++) {
 
     let item = bracketsConfig[i].join('');
     item = item.replace(/(\.|\^|\$|\*|\+|\?|\(|\)|\[|\]\{|\}|\\|\|)/g, '\\$&');
-    condition.push( item );
+    condition.push(item);
   }
 
-  let re = new RegExp('('+ condition.join('|') + ')', 'i');
+  const re = new RegExp('('+ condition.join('|') + ')', 'i');
 
-  while (str.search(re) != -1 ) {
-    str = str.replace(re, '');
+  while (string.search(re) != -1) {
+    string = string.replace(re, '');
   }
 
-  return !str;
+  return !string;
 }
